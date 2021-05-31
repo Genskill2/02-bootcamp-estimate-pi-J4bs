@@ -1,17 +1,34 @@
 import math
 import unittest
+import random
+def monte_carlo(n):
+    i=1
+    num = 0
+    den = 0
+    for i in range (n):
+        x = random.uniform(-1,1)
+        y = random.uniform(-1,1)
+        if(x*x + y*y <=1):
+            num = num+1
+        den = den+1
+    return 4*num/den
+    
+def wallis(n):
+     p = 1
+     for i in range(1,n):
+      p = p*4*i*i/(4*i*i-1)
+     return 2*p
 
 class TestWallis(unittest.TestCase):
     def test_low_iters(self):
         for i in range(0, 5):
             pi = wallis(i)
-            self.assertTrue(abs(pi - math.pi) > 0.15, msg=f"Estimate with just {i} iterations is {pi} which is too accurate.\n")
-            
+            self.assertTrue(abs(pi - math.pi) > 0.15, msg=f"Estimate with just {i} iterations is {pi} which is too accurate.\n")   
     def test_high_iters(self):
         for i in range(500, 600):
             pi = wallis(i)
             self.assertTrue(abs(pi - math.pi) < 0.01, msg=f"Estimate with even {i} iterations is {pi} which is not accurate enough.\n")
-
+        
 
 class TestMC(unittest.TestCase):
     def test_randomness(self):
@@ -30,3 +47,5 @@ class TestMC(unittest.TestCase):
     
 if __name__ == "__main__":
     unittest.main()
+    
+
